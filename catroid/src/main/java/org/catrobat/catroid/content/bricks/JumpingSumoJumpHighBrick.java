@@ -20,30 +20,28 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.catrobat.catroid.drone.jumpingsumo;
+package org.catrobat.catroid.content.bricks;
 
-import org.catrobat.catroid.common.Constants;
-import org.catrobat.catroid.formulaeditor.UserVariable;
+import android.view.View;
 
-public final class JumpingSumoDataContainer {
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
-	public static final String TAG = JumpingSumoDataContainer.class.getSimpleName();
-	private static JumpingSumoDataContainer ourInstance = new JumpingSumoDataContainer();
+import org.catrobat.catroid.R;
+import org.catrobat.catroid.content.Sprite;
 
-	private boolean positionHeadUp = true;
+import java.util.List;
 
-	public static JumpingSumoDataContainer getInstance() {
-		return ourInstance;
+public class JumpingSumoJumpHighBrick extends JumpingSumoBasicBrick {
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	public List<SequenceAction> addActionToSequence(Sprite sprite, SequenceAction sequence) {
+		sequence.addAction(sprite.getActionFactory().createJumpingSumoJumpHighAction());
+		return null;
 	}
 
-	private JumpingSumoDataContainer() {
-	}
-
-	public void setPostion(boolean pos) {
-		positionHeadUp = pos;
-	}
-
-	public boolean getPostion() {
-		return positionHeadUp;
+	@Override
+	protected String getBrickLabel(View view) {
+		return view.getResources().getString(R.string.brick_jumping_sumo_jump_high);
 	}
 }

@@ -24,21 +24,31 @@ package org.catrobat.catroid.drone.jumpingsumo;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.os.Handler;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
+import com.parrot.arsdk.ardiscovery.ARDiscoveryDeviceNetService;
 import com.parrot.arsdk.ardiscovery.ARDiscoveryDeviceService;
 import com.parrot.arsdk.ardiscovery.ARDiscoveryService;
 import com.parrot.arsdk.ardiscovery.receivers.ARDiscoveryServicesDevicesListUpdatedReceiver;
 import com.parrot.arsdk.ardiscovery.receivers.ARDiscoveryServicesDevicesListUpdatedReceiverDelegate;
+import com.parrot.arsdk.arutils.ARUtilsException;
+import com.parrot.arsdk.arutils.ARUtilsFtpConnection;
+import com.parrot.arsdk.arutils.ARUtilsManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.catrobat.catroid.CatroidApplication.getAppContext;
+
 public class JumpingSumoDiscoverer {
+	private static final String TAG = JumpingSumoDiscoverer.class.getSimpleName();
 
 	public interface Listener {
 		/**
@@ -50,18 +60,56 @@ public class JumpingSumoDiscoverer {
 		void onDronesListUpdated(List<ARDiscoveryDeviceService> dronesList);
 	}
 
+	public interface ListenerPicture {
+		/**
+		 * Called when the pic Count changes
+		 * Called in the main thread
+		 * @param picCount the count of Pictures
+		 */
+		void onPictureCount(int picCount);
+
+		/**
+		 * Called before medias will be downloaded
+		 * Called in the main thread
+		 * @param nbMedias the number of medias that will be downloaded
+		 */
+		void onMatchingMediasFound(int nbMedias);
+
+		/**
+		 * Called each time the progress of a download changes
+		 * Called in the main thread
+		 * @param mediaName the name of the media
+		 * @param progress the progress of its download (from 0 to 100)
+		 */
+		void onDownloadProgressed(String mediaName, int progress);
+
+		/**
+		 * Called when a media download has ended
+		 * Called in the main thread
+		 * @param mediaName the name of the media
+		 */
+		void onDownloadComplete(String mediaName);
+	}
+
 	private final List<Listener> listeners;
+	private final List<ListenerPicture> mlistener;
+	private final Handler handler = new Handler(getAppContext().getMainLooper());
 	private final Context mctx;
 	private ARDiscoveryService ardiscoveryService;
 	private ServiceConnection ardiscoveryServiceConnection;
 	private final ARDiscoveryServicesDevicesListUpdatedReceiver ardiscoveryServicesDevicesListUpdatedReceiver;
 	private final List<ARDiscoveryDeviceService> matchingDrones;
+	private SDCardModule sdcardModule;
+	private ARUtilsManager ftplistModule;
+	private ARUtilsManager ftpqueueManager;
+	private static final int DEVICE_PORT = 21;
 
 	private boolean startDiscoveryAfterConnection = true;
 
 	public JumpingSumoDiscoverer(Context ctx) {
 		mctx = ctx;
 		listeners = new ArrayList<>();
+		mlistener = new ArrayList<>();
 		matchingDrones = new ArrayList<>();
 		ardiscoveryServicesDevicesListUpdatedReceiver = new ARDiscoveryServicesDevicesListUpdatedReceiver(discoveryListener);
 	}
@@ -75,6 +123,11 @@ public class JumpingSumoDiscoverer {
 		listeners.add(listener);
 		notifyServiceDiscovered(matchingDrones);
 	}
+
+	public void addListenerPicture(ListenerPicture listenerPicture) {
+		mlistener.add(listenerPicture);
+	}
+
 	/**
 	 * remove a listener from the listener list
 	 * @param listener an object that implements the {@link Listener} interface
@@ -162,6 +215,64 @@ public class JumpingSumoDiscoverer {
 		startDiscoveryAfterConnection = false;
 	}
 
+	public void getInfoDevice(@NonNull ARDiscoveryDeviceService deviceService) {
+		try {
+			ftplistModule = new ARUtilsManager();
+			ftpqueueManager = new ARUtilsManager();
+			String productIP = ((ARDiscoveryDeviceNetService) (deviceService.getDevice())).getIp();
+
+			ftplistModule.initWifiFtp(productIP, DEVICE_PORT, ARUtilsFtpConnection.FTP_ANONYMOUS, "");
+			ftpqueueManager.initWifiFtp(productIP, DEVICE_PORT, ARUtilsFtpConnection.FTP_ANONYMOUS, "");
+
+			sdcardModule = new SDCardModule(ftplistModule, ftpqueueManager);
+			sdcardModule.addListener(sdcardModulelistener);
+			notifyPictureCount(sdcardModule.getPicCount());
+		} catch (ARUtilsException e) {
+			Log.e(TAG, "Exception", e);
+		}
+	}
+
+	public void download() {
+		sdcardModule.getallFlightMedias();
+	}
+
+	public void notifyPic() {
+		notifyPictureCount(sdcardModule.getPicCount());
+	}
+
+	public void onDeleteFile(String mediaName) {
+		sdcardModule.deleteLastReceivedPic(mediaName);
+		notifyPictureCount(sdcardModule.getPicCount());
+	}
+
+	private void notifyPictureCount(int picCount) {
+		List<ListenerPicture> listenersCpy = new ArrayList<>(mlistener);
+		for (ListenerPicture listener : listenersCpy) {
+			listener.onPictureCount(picCount);
+		}
+	}
+
+	private void notifyMatchingMediasFound(int nbMedias) {
+		List<ListenerPicture> listenersCpy = new ArrayList<>(mlistener);
+		for (ListenerPicture listener : listenersCpy) {
+			listener.onMatchingMediasFound(nbMedias);
+		}
+	}
+
+	private void notifyDownloadProgressed(String mediaName, int progress) {
+		List<ListenerPicture> listenersCpy = new ArrayList<>(mlistener);
+		for (ListenerPicture listener : listenersCpy) {
+			listener.onDownloadProgressed(mediaName, progress);
+		}
+	}
+
+	private void notifyDownloadComplete(String mediaName) {
+		List<ListenerPicture> listenersCpy = new ArrayList<>(mlistener);
+		for (ListenerPicture listener : listenersCpy) {
+			listener.onDownloadComplete(mediaName);
+		}
+	}
+
 	private void notifyServiceDiscovered(List<ARDiscoveryDeviceService> dronesList) {
 		List<Listener> listenersCpy = new ArrayList<>(listeners);
 		for (Listener listener : listenersCpy) {
@@ -185,4 +296,37 @@ public class JumpingSumoDiscoverer {
 					}
 				}
 			};
+
+	private final SDCardModule.Listener sdcardModulelistener = new SDCardModule.Listener() {
+		@Override
+		public void onMatchingMediasFound(final int nbMedias) {
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					notifyMatchingMediasFound(nbMedias);
+				}
+			});
+		}
+
+		@Override
+		public void onDownloadProgressed(final String mediaName, final int progress) {
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					notifyDownloadProgressed(mediaName, progress);
+				}
+			});
+		}
+
+		@Override
+		public void onDownloadComplete(final String mediaName) {
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					notifyDownloadComplete(mediaName);
+				}
+			});
+			onDeleteFile(mediaName);
+		}
+	};
 }
