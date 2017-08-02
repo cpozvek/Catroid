@@ -81,6 +81,17 @@ import org.catrobat.catroid.content.bricks.IfLogicBeginBrick;
 import org.catrobat.catroid.content.bricks.IfOnEdgeBounceBrick;
 import org.catrobat.catroid.content.bricks.IfThenLogicBeginBrick;
 import org.catrobat.catroid.content.bricks.InsertItemIntoUserListBrick;
+import org.catrobat.catroid.content.bricks.JumpingSumoAnimationsBrick;
+import org.catrobat.catroid.content.bricks.JumpingSumoJumpHighBrick;
+import org.catrobat.catroid.content.bricks.JumpingSumoJumpLongBrick;
+import org.catrobat.catroid.content.bricks.JumpingSumoMoveBackwardBrick;
+import org.catrobat.catroid.content.bricks.JumpingSumoMoveForwardBrick;
+import org.catrobat.catroid.content.bricks.JumpingSumoNoSoundBrick;
+import org.catrobat.catroid.content.bricks.JumpingSumoRotateLeftBrick;
+import org.catrobat.catroid.content.bricks.JumpingSumoRotateRightBrick;
+import org.catrobat.catroid.content.bricks.JumpingSumoSoundBrick;
+import org.catrobat.catroid.content.bricks.JumpingSumoTakingPictureBrick;
+import org.catrobat.catroid.content.bricks.JumpingSumoTurnBrick;
 import org.catrobat.catroid.content.bricks.LegoEv3MotorMoveBrick;
 import org.catrobat.catroid.content.bricks.LegoEv3MotorStopBrick;
 import org.catrobat.catroid.content.bricks.LegoEv3MotorTurnAngleBrick;
@@ -772,15 +783,11 @@ public class BrickValueParameterTest {
 
 		checkIfBrickShowsText(DroneTakeOffLandBrick.class, R.string.brick_drone_takeoff_land);
 
-		checkIfBrickShowsText(DroneFlipBrick.class, R.string.brick_drone_flip);
-
 		checkIfBrickShowsText(DroneEmergencyBrick.class, R.string.brick_drone_emergency);
 
 		checkIfBrickShowsText(DroneMoveUpBrick.class, R.string.brick_drone_move_up);
 		checkIfBrickShowsText(DroneMoveUpBrick.class, R.string.brick_drone_with);
-		checkIfBrickShowsText(DroneMoveUpBrick.class,
-				UiTestUtils.getResourcesString(R.string.formula_editor_sensor_time_second)
-				+ " ");
+
 		checkIfBrickShowsText(DroneMoveUpBrick.class, UiTestUtils.getResourcesString(R.string.percent_symbol)
 				+ " "
 				+ UiTestUtils.getResourcesString(R.string.formula_editor_function_power));
@@ -789,9 +796,7 @@ public class BrickValueParameterTest {
 
 		checkIfBrickShowsText(DroneMoveDownBrick.class, R.string.brick_drone_move_down);
 		checkIfBrickShowsText(DroneMoveDownBrick.class, R.string.brick_drone_with);
-		checkIfBrickShowsText(DroneMoveDownBrick.class,
-				UiTestUtils.getResourcesString(R.string.formula_editor_sensor_time_second)
-				+ " ");
+
 		checkIfBrickShowsText(DroneMoveDownBrick.class, UiTestUtils.getResourcesString(R.string.percent_symbol)
 				+ " "
 				+ UiTestUtils.getResourcesString(R.string.formula_editor_function_power));
@@ -800,9 +805,7 @@ public class BrickValueParameterTest {
 
 		checkIfBrickShowsText(DroneMoveLeftBrick.class, R.string.brick_drone_move_left);
 		checkIfBrickShowsText(DroneMoveLeftBrick.class, R.string.brick_drone_with);
-		checkIfBrickShowsText(DroneMoveLeftBrick.class,
-				UiTestUtils.getResourcesString(R.string.formula_editor_sensor_time_second)
-				+ " ");
+
 		checkIfBrickShowsText(DroneMoveLeftBrick.class, UiTestUtils.getResourcesString(R.string.percent_symbol)
 				+ " "
 				+ UiTestUtils.getResourcesString(R.string.formula_editor_function_power));
@@ -811,9 +814,7 @@ public class BrickValueParameterTest {
 
 		checkIfBrickShowsText(DroneMoveRightBrick.class, R.string.brick_drone_move_right);
 		checkIfBrickShowsText(DroneMoveRightBrick.class, R.string.brick_drone_with);
-		checkIfBrickShowsText(DroneMoveRightBrick.class,
-				UiTestUtils.getResourcesString(R.string.formula_editor_sensor_time_second)
-				+ " ");
+
 		checkIfBrickShowsText(DroneMoveRightBrick.class, UiTestUtils.getResourcesString(R.string.percent_symbol)
 				+ " "
 				+ UiTestUtils.getResourcesString(R.string.formula_editor_function_power));
@@ -822,9 +823,7 @@ public class BrickValueParameterTest {
 
 		checkIfBrickShowsText(DroneMoveForwardBrick.class, R.string.brick_drone_move_forward);
 		checkIfBrickShowsText(DroneMoveForwardBrick.class, R.string.brick_drone_with);
-		checkIfBrickShowsText(DroneMoveForwardBrick.class,
-				UiTestUtils.getResourcesString(R.string.formula_editor_sensor_time_second)
-				+ " ");
+
 		checkIfBrickShowsText(DroneMoveForwardBrick.class, UiTestUtils.getResourcesString(R.string.percent_symbol)
 				+ " "
 				+ UiTestUtils.getResourcesString(R.string.formula_editor_function_power));
@@ -833,9 +832,7 @@ public class BrickValueParameterTest {
 
 		checkIfBrickShowsText(DroneMoveBackwardBrick.class, R.string.brick_drone_move_backward);
 		checkIfBrickShowsText(DroneMoveBackwardBrick.class, R.string.brick_drone_with);
-		checkIfBrickShowsText(DroneMoveBackwardBrick.class,
-				UiTestUtils.getResourcesString(R.string.formula_editor_sensor_time_second)
-				+ " ");
+
 		checkIfBrickShowsText(DroneMoveBackwardBrick.class, UiTestUtils.getResourcesString(R.string.percent_symbol)
 				+ " "
 				+ UiTestUtils.getResourcesString(R.string.formula_editor_function_power));
@@ -844,9 +841,7 @@ public class BrickValueParameterTest {
 
 		checkIfBrickShowsText(DroneTurnLeftBrick.class, R.string.brick_drone_turn_left);
 		checkIfBrickShowsText(DroneTurnLeftBrick.class, R.string.brick_drone_with);
-		checkIfBrickShowsText(DroneTurnLeftBrick.class,
-				UiTestUtils.getResourcesString(R.string.formula_editor_sensor_time_second)
-				+ " ");
+
 		checkIfBrickShowsText(DroneTurnLeftBrick.class, UiTestUtils.getResourcesString(R.string.percent_symbol)
 				+ " "
 				+ UiTestUtils.getResourcesString(R.string.formula_editor_function_power));
@@ -855,9 +850,7 @@ public class BrickValueParameterTest {
 
 		checkIfBrickShowsText(DroneTurnRightBrick.class, R.string.brick_drone_turn_right);
 		checkIfBrickShowsText(DroneTurnRightBrick.class, R.string.brick_drone_with);
-		checkIfBrickShowsText(DroneTurnRightBrick.class,
-				UiTestUtils.getResourcesString(R.string.formula_editor_sensor_time_second)
-				+ " ");
+
 		checkIfBrickShowsText(DroneTurnRightBrick.class, UiTestUtils.getResourcesString(R.string.percent_symbol)
 				+ " "
 				+ UiTestUtils.getResourcesString(R.string.formula_editor_function_power));
@@ -865,6 +858,62 @@ public class BrickValueParameterTest {
 		checkIfBrickShowsText(DroneTurnRightBrick.class, "20.0");
 
 		checkIfBrickShowsText(DroneSwitchCameraBrick.class, R.string.brick_drone_switch_camera);
+	}
+
+	@Category({Cat.AppUi.class, Level.Smoke.class, Cat.Gadgets.class})
+	@Test
+	public void testJumpingSumoBricksDefaultValues() {
+		openCategory(R.string.category_jumping_sumo);
+
+		checkIfBrickShowsText(JumpingSumoAnimationsBrick.class, R.string.default_jumping_sumo_project_sprites_animation);
+		checkIfBrickShowsSpinnerWithEditTextOverlayWithText(JumpingSumoAnimationsBrick.class, R.id
+						.brick_jumping_sumo_animation_spinner, R.string.animation_spin);
+
+		checkIfBrickShowsText(JumpingSumoMoveForwardBrick.class, R.string.brick_jumping_sumo_move_forward);
+		checkIfBrickShowsText(JumpingSumoMoveForwardBrick.class, R.string.brick_drone_with);
+
+		checkIfBrickShowsText(JumpingSumoMoveForwardBrick.class, UiTestUtils.getResourcesString(R.string.percent_symbol)
+				+ " "
+				+ UiTestUtils.getResourcesString(R.string.formula_editor_function_power));
+		checkIfBrickShowsText(JumpingSumoMoveForwardBrick.class, "1");
+		checkIfBrickShowsText(JumpingSumoMoveForwardBrick.class, "80");
+
+		checkIfBrickShowsText(JumpingSumoMoveBackwardBrick.class, R.string.brick_jumping_sumo_move_backward);
+		checkIfBrickShowsText(JumpingSumoMoveBackwardBrick.class, R.string.brick_drone_with);
+
+		checkIfBrickShowsText(JumpingSumoMoveBackwardBrick.class, UiTestUtils.getResourcesString(R.string.percent_symbol)
+				+ " "
+				+ UiTestUtils.getResourcesString(R.string.formula_editor_function_power));
+		checkIfBrickShowsText(JumpingSumoMoveBackwardBrick.class, "1");
+		checkIfBrickShowsText(JumpingSumoMoveBackwardBrick.class, "80");
+
+		checkIfBrickShowsText(JumpingSumoJumpLongBrick.class, R.string.brick_jumping_sumo_jump_long);
+
+		checkIfBrickShowsText(JumpingSumoJumpHighBrick.class, R.string.brick_jumping_sumo_jump_high);
+
+		checkIfBrickShowsText(JumpingSumoNoSoundBrick.class, R.string.brick_jumping_sumo_no_sound);
+
+		checkIfBrickShowsText(JumpingSumoSoundBrick.class, R.string.default_jumping_sumo_project_sprites_sound);
+		checkIfBrickShowsSpinnerWithEditTextOverlayWithText(JumpingSumoSoundBrick.class, R.id
+				.brick_jumping_sumo_sound_spinner, R.string.sound_default);
+
+		checkIfBrickShowsText(JumpingSumoSoundBrick.class, R.string.jumping_sumo_volume);
+		checkIfBrickShowsText(JumpingSumoSoundBrick.class, "50");
+		checkIfBrickShowsText(JumpingSumoSoundBrick.class, R.string.percent_symbol);
+
+		checkIfBrickShowsText(JumpingSumoRotateLeftBrick.class, R.string.brick_jumping_sumo_rotate_left);
+
+		checkIfBrickShowsText(JumpingSumoRotateLeftBrick.class, R.string.brick_jumping_sumo_rotate_text);
+		checkIfBrickShowsText(JumpingSumoRotateLeftBrick.class, "90");
+
+		checkIfBrickShowsText(JumpingSumoRotateRightBrick.class, R.string.brick_jumping_sumo_rotate_right);
+
+		checkIfBrickShowsText(JumpingSumoRotateRightBrick.class, R.string.brick_jumping_sumo_rotate_text);
+		checkIfBrickShowsText(JumpingSumoRotateRightBrick.class, "90");
+
+		checkIfBrickShowsText(JumpingSumoTurnBrick.class, R.string.brick_jumping_sumo_turn);
+
+		checkIfBrickShowsText(JumpingSumoTakingPictureBrick.class, R.string.brick_jumping_sumo_taking_picture);
 	}
 
 	@Category({Cat.AppUi.class, Level.Smoke.class, Cat.Gadgets.class})

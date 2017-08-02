@@ -60,6 +60,7 @@ import static org.catrobat.catroid.ui.SettingsActivity.SETTINGS_SHOW_ARDUINO_BRI
 import static org.catrobat.catroid.ui.SettingsActivity.SETTINGS_SHOW_HINTS;
 import static org.catrobat.catroid.ui.SettingsActivity.SETTINGS_SHOW_NFC_BRICKS;
 import static org.catrobat.catroid.ui.SettingsActivity.SETTINGS_SHOW_PARROT_AR_DRONE_BRICKS;
+import static org.catrobat.catroid.ui.SettingsActivity.SETTINGS_SHOW_PARROT_JUMPING_SUMO_BRICKS;
 import static org.catrobat.catroid.ui.SettingsActivity.SETTINGS_SHOW_PHIRO_BRICKS;
 import static org.catrobat.catroid.ui.SettingsActivity.SETTINGS_SHOW_RASPI_BRICKS;
 
@@ -74,7 +75,7 @@ public class SettingsActivityTest {
 			SETTINGS_SHOW_PHIRO_BRICKS, SETTINGS_SHOW_NFC_BRICKS, SETTINGS_SHOW_HINTS, SETTINGS_CRASH_REPORTS,
 			SETTINGS_MINDSTORMS_NXT_BRICKS_ENABLED, SETTINGS_MINDSTORMS_NXT_SHOW_SENSOR_INFO_BOX_DISABLED,
 			SETTINGS_MINDSTORMS_EV3_BRICKS_ENABLED, SETTINGS_MINDSTORMS_EV3_SHOW_SENSOR_INFO_BOX_DISABLED,
-			SETTINGS_SHOW_PARROT_AR_DRONE_BRICKS,
+			SETTINGS_SHOW_PARROT_AR_DRONE_BRICKS, SETTINGS_SHOW_PARROT_JUMPING_SUMO_BRICKS,
 			SETTINGS_SHOW_RASPI_BRICKS,
 			SETTINGS_CAST_GLOBALLY_ENABLED));
 	private Map<String, Boolean> initialSettings = new HashMap<>();
@@ -147,6 +148,13 @@ public class SettingsActivityTest {
 				.perform(click());
 
 		checkPreference(R.string.preference_title_enable_quadcopter_bricks, SETTINGS_SHOW_PARROT_AR_DRONE_BRICKS);
+	}
+
+	@Test
+	public void parrotJumpingSumoSettingsTest() {
+		onData(PreferenceMatchers.withTitle(R.string.preference_title_enable_jumpingsumo_bricks)).perform(click());
+
+		checkPreference(R.string.preference_title_enable_jumpingsumo_bricks, SETTINGS_SHOW_PARROT_JUMPING_SUMO_BRICKS);
 	}
 
 	@Test

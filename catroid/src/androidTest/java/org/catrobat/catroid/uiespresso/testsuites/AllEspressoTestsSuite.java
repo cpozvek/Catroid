@@ -25,6 +25,14 @@ package org.catrobat.catroid.uiespresso.testsuites;
 
 import org.catrobat.catroid.uiespresso.SmokeTest;
 import org.catrobat.catroid.uiespresso.annotations.FlakyTestTest;
+import org.catrobat.catroid.uiespresso.content.brick.ARDroneMoveBackwardBrickTest;
+import org.catrobat.catroid.uiespresso.content.brick.ARDroneMoveDownBrickTest;
+import org.catrobat.catroid.uiespresso.content.brick.ARDroneMoveForwardBrickTest;
+import org.catrobat.catroid.uiespresso.content.brick.ARDroneMoveLeftBrickTest;
+import org.catrobat.catroid.uiespresso.content.brick.ARDroneMoveRightBrickTest;
+import org.catrobat.catroid.uiespresso.content.brick.ARDroneMoveUpBrickTest;
+import org.catrobat.catroid.uiespresso.content.brick.ARDroneTurnLeftBrickTest;
+import org.catrobat.catroid.uiespresso.content.brick.ARDroneTurnRightBrickTest;
 import org.catrobat.catroid.uiespresso.content.brick.AskBrickTest;
 import org.catrobat.catroid.uiespresso.content.brick.BrickValueParameterTest;
 import org.catrobat.catroid.uiespresso.content.brick.ChangeBrightnessByNBrickTest;
@@ -43,6 +51,12 @@ import org.catrobat.catroid.uiespresso.content.brick.GlideToBrickTest;
 import org.catrobat.catroid.uiespresso.content.brick.GoNStepsBackTest;
 import org.catrobat.catroid.uiespresso.content.brick.GoToBrickTest;
 import org.catrobat.catroid.uiespresso.content.brick.HideBrickTest;
+import org.catrobat.catroid.uiespresso.content.brick.JumpingSumoAnimationBrickTest;
+import org.catrobat.catroid.uiespresso.content.brick.JumpingSumoMoveBackwardBrickTest;
+import org.catrobat.catroid.uiespresso.content.brick.JumpingSumoMoveForwardBrickTest;
+import org.catrobat.catroid.uiespresso.content.brick.JumpingSumoRotateLeftBrickTest;
+import org.catrobat.catroid.uiespresso.content.brick.JumpingSumoRotateRightBrickTest;
+import org.catrobat.catroid.uiespresso.content.brick.JumpingSumoSoundBrickTest;
 import org.catrobat.catroid.uiespresso.content.brick.LegoEV3SetLedBrickTest;
 import org.catrobat.catroid.uiespresso.content.brick.LegoEv3MotorMoveBrickTest;
 import org.catrobat.catroid.uiespresso.content.brick.LegoEv3MotorStopBrickTest;
@@ -101,6 +115,20 @@ import org.junit.runners.Suite;
 		SetColorBrickTest.class,
 		LegoEv3MotorStopBrickTest.class,
 		LegoNxtMotorTurnAngleBrickTest.class,
+		ARDroneMoveBackwardBrickTest.class,
+		ARDroneMoveDownBrickTest.class,
+		ARDroneMoveForwardBrickTest.class,
+		ARDroneMoveLeftBrickTest.class,
+		ARDroneMoveRightBrickTest.class,
+		ARDroneMoveUpBrickTest.class,
+		ARDroneTurnLeftBrickTest.class,
+		ARDroneTurnRightBrickTest.class,
+		JumpingSumoAnimationBrickTest.class,
+		JumpingSumoMoveBackwardBrickTest.class,
+		JumpingSumoMoveForwardBrickTest.class,
+		JumpingSumoSoundBrickTest.class,
+		JumpingSumoRotateLeftBrickTest.class,
+		JumpingSumoRotateRightBrickTest.class,
 		ForeverBrickTest.class,
 		ChangeSizeByNBrickTest.class,
 		ClearGraphicEffectBrickTest.class,
