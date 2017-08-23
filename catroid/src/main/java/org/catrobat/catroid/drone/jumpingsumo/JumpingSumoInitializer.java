@@ -274,6 +274,12 @@ public class JumpingSumoInitializer {
 		jsDiscoverer.download();
 	}
 
+	private void onConnectionLost(final StageActivity context) {
+		if (stageActivity instanceof StageActivity && !(stageActivity == null)) {
+			context.jsDestroy();
+		}
+	}
+
 	public static void showUnCancellableErrorDialog(final StageActivity context, String title, String message) {
 		Builder builder = new CustomAlertDialogBuilder(context);
 
@@ -311,6 +317,10 @@ public class JumpingSumoInitializer {
 			deviceState = newState;
 			if (deviceState.equals(ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_RUNNING)) {
 				jsDiscoverer.removeListener(discovererListener);
+			}
+			else if (deviceState.equals(ARCONTROLLER_DEVICE_STATE_ENUM.ARCONTROLLER_DEVICE_STATE_STOPPED)) {
+				Log.e(TAG, "Jumping Sumo Connection Lost");
+				onConnectionLost(stageActivity);
 			}
 		}
 
